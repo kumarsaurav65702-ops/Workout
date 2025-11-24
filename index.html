@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Workout Plans</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .week-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .workout-plans {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .week-plan {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .week-plan.active {
+            display: block;
+        }
+        
+        .week-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .days-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .day-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .day-body {
+            padding: 1.5rem;
+        }
+        
+        .exercise-list {
+            list-style-type: none;
+        }
+        
+        .exercise-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .exercise-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .exercise-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-right: 0.5rem;
+        }
+        
+        .arms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .arms-section h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .week-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab {
+                width: 80%;
+                text-align: center;
+            }
+            
+            .days-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .arms-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .week-title {
+                font-size: 1.5rem;
+            }
+            
+            .day-body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>NEW WORKOUT ROUTINE</h1>
+            <p class="subtitle">Transform your body with my effective workout plans</p>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="week-tabs">
+            <div class="tab active" data-week="week1">Week 1</div>
+            <div class="tab" data-week="week2">Week 2</div>
+        </div>
+        
+        <div class="workout-plans">
+            <!-- Week 1 Plan -->
+            <div class="week-plan active" id="week1">
+                <h2 class="week-title">Week 1 Workout Plan</h2>
+                <div class="days-container">
+                    <!-- Monday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Monday - Chest & Abs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Flat Dumbbell press</li>
+                                <li>Incline bench press</li>
+                                <li>Pec-dec fly</li>
+                                <li>Decline bench press</li>
+                                <li>Cable fly</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Tuesday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Tuesday - Legs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Squats</li>
+                                <li>Leg press</li>
+                                <li>Quads extension</li>
+                                <li>Hamstring curl</li>
+                                <li>Calf raises</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Wednesday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Wednesday - Shoulder & Abs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Side raises</li>
+                                <li>Barbell overhead press</li>
+                                <li>Dumbbell press</li>
+                                <li>Front raises</li>
+                                <li>Dumbbell reverse fly (Reardelts)</li>
+                                <li>Shrugs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Thursday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Thursday - Back & Forearms</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Deadlift</li>
+                                <li>Lat pull-down</li>
+                                <li>Single arm bent over rows</li>
+                                <li>Close grip lat pull-down</li>
+                                <li>Cable rows</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Friday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Friday - Arms & Abs</h3>
+                        </div>
+                        <div class="day-body">
+                            <div class="arms-container">
+                                <div class="arms-section">
+                                    <h4>Biceps</h4>
+                                    <ul class="exercise-list">
+                                        <li>Barbell curls</li>
+                                        <li>Hammer curls</li>
+                                        <li>Dumbbell curls</li>
+                                        <li>Preacher curls</li>
+                                    </ul>
+                                </div>
+                                <div class="arms-section">
+                                    <h4>Triceps</h4>
+                                    <ul class="exercise-list">
+                                        <li>Rope pushdown</li>
+                                        <li>Scull crush</li>
+                                        <li>Close grip bench press</li>
+                                        <li>Diamond push up + overhead cable</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Saturday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Saturday - Legs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Hack Squats / Squats</li>
+                                <li>Stif leg deadlift</li>
+                                <li>Squats / Hack squats</li>
+                                <li>Calf (smith and leg press machine)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 2 Plan -->
+            <div class="week-plan" id="week2">
+                <h2 class="week-title">Week 2 Workout Plan</h2>
+                <div class="days-container">
+                    <!-- Monday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Monday - Chest & Abs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Flat bench press</li>
+                                <li>Incline machine press</li>
+                                <li>Pec-dec fly</li>
+                                <li>Chest dips</li>
+                                <li>Cable fly</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Tuesday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Tuesday - Legs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Squats</li>
+                                <li>Leg press</li>
+                                <li>Quads extension</li>
+                                <li>Hamstring curl</li>
+                                <li>Calf raises</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Wednesday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Wednesday - Shoulder & Abs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Barbell overhead press</li>
+                                <li>Dumbbell press</li>
+                                <li>Side raises + Front raises</li>
+                                <li>Dumbbell reverse fly (Reardelts)</li>
+                                <li>Shrugs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Thursday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Thursday - Back & Forearms</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Barbell bent over rows</li>
+                                <li>Lat pull-down</li>
+                                <li>Machine rows</li>
+                                <li>Reverse grip lat pull-down</li>
+                                <li>T – bar rows</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Friday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Friday - Arms & Abs</h3>
+                        </div>
+                        <div class="day-body">
+                            <div class="arms-container">
+                                <div class="arms-section">
+                                    <h4>Biceps</h4>
+                                    <ul class="exercise-list">
+                                        <li>Barbell curls</li>
+                                        <li>Hammer curls</li>
+                                        <li>Incline Dumbbell curls</li>
+                                        <li>Spider curls</li>
+                                    </ul>
+                                </div>
+                                <div class="arms-section">
+                                    <h4>Triceps</h4>
+                                    <ul class="exercise-list">
+                                        <li>Bar dips</li>
+                                        <li>Straight bar push down</li>
+                                        <li>Overhead triceps extension</li>
+                                        <li>Kick backs</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Saturday -->
+                    <div class="day-card">
+                        <div class="day-header">
+                            <h3>Saturday - Legs</h3>
+                        </div>
+                        <div class="day-body">
+                            <ul class="exercise-list">
+                                <li>Hack Squats / Squats</li>
+                                <li>Stiff leg deadlift</li>
+                                <li>Squats / Hack squats</li>
+                                <li>Calf (smith and leg press machine)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Workout Plans | Stay Fit, Stay Healthy | By Saurav</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const weekPlans = document.querySelectorAll('.week-plan');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and plans
+                    tabs.forEach(t => t.classList.remove('active'));
+                    weekPlans.forEach(plan => plan.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding week plan
+                    const weekId = this.getAttribute('data-week');
+                    document.getElementById(weekId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
